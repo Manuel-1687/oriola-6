@@ -31,21 +31,3 @@ services:
         generateValue: true
       - key: REFRESH_TOKEN_KEY
         generateValue: true
-      - key: CORS_ALLOWED_ORIGINS
-        fromService:
-          type: web
-          name: oriola-activity-6-frontend
-          envVarKey: RENDER_EXTERNAL_URL
-
-  - type: web
-    name: oriola-activity-6-frontend
-    runtime: static
-    rootDir: frontend
-    buildCommand: npm ci && npm run build
-    staticPublishPath: dist
-    envVars:
-      - key: VITE_API_URL
-        fromService:
-          type: web
-          name: oriola-activity-6-api
-          envVarKey: RENDER_EXTERNAL_URL

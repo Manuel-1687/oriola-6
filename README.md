@@ -231,9 +231,9 @@ The authenticated API is `POST /api/auth/register`, `POST /api/auth/login`, `GET
 
 ### Render deployment
 
-Connect the repository to Render and create services from `render.yaml`. The blueprint creates a Docker Web Service for LavaLust and a Static Site for React, and wires the public API URL and frontend CORS origin between them. Enter the Aiven values requested by Render as secret environment variables. In the API service's dashboard, upload the Aiven CA certificate as a Secret File named `ca.pem`; `DB_SSL_CA` is configured as `/etc/secrets/ca.pem`.
+Connect the repository to Render and create or update the Docker Web Service from `render.yaml`. The Docker build compiles the React app and serves it at `/`; LavaLust API routes remain under `/api/`, using the same origin. Set the Aiven values as Render environment variables. Upload the Aiven CA certificate as a Secret File named `ca.pem`; `DB_SSL_CA` is configured as `/etc/secrets/ca.pem`.
 
-To create the tables without a local SQL client, open the API Web Service Shell in Render after its Aiven environment variables and CA Secret File are configured, then run `php console/setup_schema.php`. The script applies `database/lab6_schema.sql` to the configured Aiven database and is safe to run more than once. Render and Aiven credentials are intentionally not included in this repository; deployment requires your own GitHub, Render, and Aiven accounts.
+To create the tables without a local SQL client, open the Render Web Service Shell after its Aiven environment variables and CA Secret File are configured, then run `php console/setup_schema.php`. The script applies `database/lab6_schema.sql` to the configured Aiven database and is safe to run more than once. Render and Aiven credentials are intentionally not included in this repository; deployment requires your own GitHub, Render, and Aiven accounts.
 
 ---
 

@@ -15,7 +15,7 @@ import {
   X,
 } from 'lucide-react';
 
-const configuredApiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const configuredApiUrl = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? window.location.origin : 'http://localhost:3000');
 const API_URL = (configuredApiUrl.startsWith('http') ? configuredApiUrl : `https://${configuredApiUrl}`).replace(/\/$/, '');
 const TOKEN_KEY = 'stockroom_access_token';
 const emptyProduct = { product_name: '', description: '', price: '', quantity: '' };

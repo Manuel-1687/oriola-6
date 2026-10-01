@@ -1,0 +1,51 @@
+services:
+  - type: web
+    name: oriola-activity-6-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: PORT
+        value: "80"
+      - key: DB_DRIVER
+        value: mysql
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        sync: false
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_NAME
+        sync: false
+      - key: DB_CHARSET
+        value: utf8mb4
+      - key: DB_SSL_CA
+        value: /etc/secrets/ca.pem
+      - key: JWT_SECRET
+        generateValue: true
+      - key: REFRESH_TOKEN_KEY
+        generateValue: true
+      - key: CORS_ALLOWED_ORIGINS
+        fromService:
+          type: web
+          name: oriola-activity-6-frontend
+          envVarKey: RENDER_EXTERNAL_URL
+
+  - type: web
+    name: oriola-activity-6-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: oriola-activity-6-api
+          envVarKey: RENDER_EXTERNAL_URL
